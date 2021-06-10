@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+  
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        
+        file=index.html
+        bucket=bootcamp-compasso
+        resource="/${bucket}/${file}"
+        contentType="text/html"
+        dateValue=`date -R`
+        stringToSign="PUT\n\n${contentType}\n${dateValue}\n${resource}"
+        s3Key=AKIARK3MOFE37NWVLIGK
+        s3Secret=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
+        signature=`echo -en ${stringToSign} | openssl sha1 -hmac ${s3Secret} -binary | base64`
+        curl -X PUT -T "${file}" \
+          -H "Host: ${bucket}.s3.amazonaws.com" \
+          -H "Date: ${dateValue}" \
+          -H "Content-Type: ${contentType}" \
+          -H "Authorization: AWS ${s3Key}:${signature}" \
+          https://${bucket}.s3.sa-east-1.amazonaws.com/${file}
