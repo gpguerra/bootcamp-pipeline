@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepalive</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <style>
+/* Reset CSS */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html {
+  background: #1c1d20;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+body {
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  outline: none;
+  color: #e0e0e0;
+  background: linear-gradient(180deg, #33383d 0%, #1c1d20 100%) no-repeat;
+  overflow: hidden;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.middle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+h1 {
+  font-size: 100px;
+}
+
+h2 {
+  font-size: 60px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+p {
+  font-size: 16px;
+}
+
+input[type=text] {
+  width: calc(100% - 70px);
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 50px;
+  outline: none;
+  padding: 20px 40px 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=password] {
+  width: calc(100% - 70px);
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 50px;
+  outline: none;
+  padding: 20px 40px 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn-submit {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  outline: none;
+  border: solid 3px transparent;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  background: red; /* MUDE A COR AQUI */
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+}
+.btn-submit:hover {
+  box-shadow: none;
+}
+
+.login {
+  display: flex;
+}
+.login__leftbox {
+  flex: 1;
+}
+.login__leftbox .content {
+  flex-direction: column;
+  justify-content: center;
+}
+.login__leftbox .content .text-box {
+  /* width: 500px; */
+  margin: 25px;
+  margin-bottom: 100px;
+}
+.login__leftbox .content .text-box p {
+  margin: 20px 0;
+  font-weight: 300;
+  line-height: 22px;
+}
+.login__leftbox .content .form-box {
+  width: 400px;
+}
+.login__leftbox .content .form-box .form-user {
+  margin-top: 30px;
+  position: relative;
+}
+.login__leftbox .content .form-box .form-user input:focus + label {
+  opacity: 0;
+}
+.login__leftbox .content .form-box .form-user input:valid + label {
+  opacity: 0;
+}
+.login__leftbox .content .form-box .form-user label {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  cursor: text;
+  transition: all 0.1s ease-in-out;
+}
+.login__leftbox .content .form-box .form-password {
+  margin-top: 30px;
+  position: relative;
+}
+.login__leftbox .content .form-box .form-password input:focus + label {
+  opacity: 0;
+}
+.login__leftbox .content .form-box .form-password input:valid + label {
+  opacity: 0;
+}
+.login__leftbox .content .form-box .form-password label {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  cursor: text;
+  transition: all 0.1s ease-in-out;
+}
+.login__leftbox .content .form-box .icon {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.login__leftbox .content .form-box .icon-user {
+  top: 18px;
+}
+.login__leftbox .content .form-box .alert-ipt input {
+  border-color: #e9b425;
+}
+.login__leftbox .content .form-box .alert-ipt input:valid {
+  border-color: #fff;
+}
+.login__leftbox .content .form-box .btn-submit {
+  margin-top: 30px;
+}
+.login__leftbox .content .form-box .alert {
+  color: #e9b425;
+  text-align: center;
+  padding: 20px 0;
+  transition: all ease-in-out 0.5s;
+}
+.login__rightbox {
+  flex: 1;
+  background-image: url(https://blog.compassouol.com/wp-content/uploads/2021/01/bg-keepalive-scaled.jpg);
+  background-size: 100%;
+  background-color: #0e100f;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+.login__rightbox .img-logo {
+  margin-top: 40px;
+}
+.login__rightbox .img-logo img {
+  max-width: 300px;
+}
+
+.login__rightbox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.login__rightbox svg {
+  max-width: 360px;
+  width: 100%;
+  padding: 0 25px;
+  margin-top: 15px;
+}
+
+.index {
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  outline: none;
+  color: #333333;
+  background: linear-gradient(116deg, #ffffff 0%, #f0f0f0 100%) no-repeat;
+  overflow: hidden;
+}
+.index .keepalive {
+  height: 100vh;
+}
+.index .keepalive > svg {
+  width: 51%;
+  max-width: 825px;
+  position: absolute;
+  bottom: -59px;
+  left: -16%;
+}
+.index .keepalive .mission-text {
+  text-align: right;
+  display: flex;
+  justify-content: center;
+  padding: 0 100px;
+  flex-direction: column;
+  height: 100%;
+  z-index: 2;
+  position: relative;
+}
+.index .keepalive .mission-text h2,
+.index .keepalive .mission-text h3 {
+  font-weight: bold;
+  color: #c12d18;
+}
+.index .keepalive .header {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.index .keepalive .header .logo-img {
+  width: 150px;
+}
+.index .keepalive .header .timestamp {
+  text-align: center;
+}
+.index .keepalive .header .timestamp h1 {
+  font-weight: bold;
+}
+.index .keepalive .header .weather {
+  display: none;
+}
+.index .keepalive .header .weather p {
+  font-size: 10px;
+}
+.index .keepalive .header .weather h2 {
+  font-weight: bold;
+}
+.index .keepalive .bottom-bar {
+  height: 70px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(90deg, #33383d 0%, #1c1d20 100%);
+  color: #e0e0e0;
+  padding: 15px;
+  display: flex;
+  line-height: 18px;
+}
+.index .keepalive .bottom-bar p {
+  font-size: 12px;
+}
+.index .keepalive .bottom-bar .text-msg {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  padding: 0 60px;
+  border-right: 2px solid #fff;
+}
+.index .keepalive .bottom-bar .app-msg {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+.index .keepalive .bottom-bar .app-msg__text {
+  flex: 1;
+  padding-left: 30px;
+  padding-right: 20px;
+  text-align: right;
+}
+.index .keepalive .bottom-bar .app-msg__time {
+  flex: 4;
+  text-align: left;
+}
+.index .keepalive .bottom-bar .app-msg__time h2 {
+  font-weight: bold;
+  line-height: 50px;
+}
+.index .keepalive .bottom-bar .buttons {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.index .keepalive .bottom-bar .buttons a {
+  text-decoration: none;
+  color: #fff;
+}
+.index .keepalive .bottom-bar .buttons .navigation {
+  flex: 1;
+  background-color: #fff;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+.index .keepalive .bottom-bar .buttons .navigation a {
+  color: #c12d18;
+}
+.index .keepalive .bottom-bar .buttons .exit {
+  flex: 1;
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 769px) {
+  h1 {
+    font-size: 80px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  input[type=text] {
+    width: 280px;
+    padding: 10px 5px 10px 15px;
+    font-size: 14px;
+  }
+
+  input[type=password] {
+    width: 280px;
+    padding: 10px 5px 10px 15px;
+    font-size: 14px;
+  }
+
+  .btn-submit {
+    font-size: 14px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .login__leftbox .content .text-box {
+    width: 300px;
+    margin-bottom: 40px;
+  }
+  .login__leftbox .content .form-box {
+    width: 300px;
+  }
+  .login__leftbox .content .form-box .form-user label,
+.login__leftbox .content .form-box .form-password label {
+    top: 12px;
+    left: 15px;
+    font-size: 14px;
+  }
+  .login__leftbox .content .form-box .icon {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+  }
+  .login__leftbox .content .form-box .icon svg {
+    width: 12px;
+  }
+  .login__leftbox .content .form-box .alert {
+    color: #e9b425;
+    text-align: center;
+    padding: 20px 0;
+    transition: all ease-in-out 0.5s;
+  }
+
+  .index .keepalive .mission-text {
+    display: block;
+    margin: 100px 0;
+  }
+  .index .keepalive .bottom-bar .buttons {
+    flex: 2;
+  }
+}
+@media only screen and (min-width: 500px) and (max-width: 768px) {
+  .login {
+    flex-direction: column-reverse;
+  }
+  .login__rightbox {
+    background: transparent;
+  }
+  .login__rightbox img {
+    max-width: 200px;
+  }
+  .login__leftbox {
+    padding-top: 50px;
+  }
+
+  .index .keepalive .mission-text {
+    display: block;
+    margin-top: 100px;
+    padding: 0 40px;
+  }
+  .index .keepalive .bottom-bar {
+    padding: 0;
+    height: 100px;
+  }
+  .index .keepalive .bottom-bar .buttons {
+    flex: 2;
+  }
+  .index .keepalive .bottom-bar .text-msg {
+    padding: 15px 20px;
+  }
+}
+@media only screen and (max-width: 499px) {
+  body {
+    overflow: scroll;
+  }
+
+  h1 {
+    font-size: 80px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .login {
+    flex-direction: column-reverse;
+  }
+  .login__rightbox {
+    background: transparent;
+  }
+  .login__rightbox .img-logo img {
+    max-width: 70%;
+  }
+  .login__leftbox {
+    padding-top: 50px;
+  }
+  .login__leftbox .content .text-box {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    margin-bottom: 40px;
+  }
+  .login__leftbox .content .form-box {
+    width: calc(100% - 40px);
+    padding: 20px;
+  }
+
+  input[type=text] {
+    width: calc(100% - 70px);
+  }
+
+  input[type=password] {
+    width: calc(100% - 70px);
+  }
+
+  .index .keepalive .header {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .index .keepalive .mission-text {
+    display: none;
+  }
+  .index .keepalive .bottom-bar {
+    flex-direction: column;
+    width: auto;
+    height: auto;
+  }
+  .index .keepalive .bottom-bar .text-msg {
+    text-align: center;
+    border-right: none;
+    padding: 30px 20px;
+  }
+  .index .keepalive .bottom-bar .text-msg p {
+    font-size: 16px;
+  }
+  .index .keepalive .bottom-bar .app-msg {
+    display: block;
+  }
+  .index .keepalive .bottom-bar .app-msg__text {
+    text-align: center;
+    padding: 0;
+  }
+  .index .keepalive .bottom-bar .app-msg__time {
+    text-align: center;
+  }
+  .index .keepalive .bottom-bar .buttons {
+    display: block;
+    margin-top: 50px;
+  }
+  .index .keepalive .bottom-bar .buttons .navigation {
+    height: auto;
+    display: block;
+    padding: 20px;
+  }
+  .index .keepalive .bottom-bar .buttons .exit {
+    margin-top: 10px;
+    padding: 20px;
+    border: 1px solid #fff;
+  }
+}
+
+/*# sourceMappingURL=css.css.map */
+
+    </style>
+</head>
+<body>
+    <div class="login">
+        <div class="login__leftbox center">
+            <div class="content">
+                <div class="text-box">
+                    <h2>Olá,<br/>Bem-vindo ao <br/> Bootcamp de Pipelines!</h2>
+                    <p>Para continuar navegando de forma segura, efetue o login na rede.</p>
+                </div>
+                <div class="form-box">
+                  <div style="text-align: center; font-size: 32px; color: chartreuse;">CHANGE ME</div>
+                    <div style="text-align: center; font-size: 50px; color: chartreuse;">↓</div>
+                    <button class="btn-submit" type="submit">Big colored Button</button>
+                </div>
+            </div>
+        </div>
+        <div class="login__rightbox">
+                <svg class="img-logo" width='360px'viewBox="0 0 716 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M371.3 47.5V89.7C371.3 90.1 371 90.5 370.5 90.5H360.6C360.2 90.5 359.8 90.2 359.8 89.7V51.2C359.8 39 353.1 31.9 341.7 31.9C330.8 31.9 322.2 39.5 322.2 51.5V89.7C322.2 90.1 321.9 90.5 321.4 90.5H311.5C311.1 90.5 310.7 90.2 310.7 89.7V51.2C310.7 39 304 31.9 292.6 31.9C282 31.9 273.1 39.2 273.1 51.5V89.7C273.1 90.1 272.8 90.5 272.3 90.5H262.5C262.1 90.5 261.7 90.2 261.7 89.7V23.2C261.7 22.8 262 22.4 262.5 22.4H272.2C272.6 22.4 273 22.7 273 23.2V28.9C273 29.6 273.9 29.9 274.3 29.4C279.7 23.2 287.5 21.1 294.6 21.1C305.3 21.1 313.8 25.6 318.3 33.2C318.6 33.7 319.3 33.7 319.6 33.2C325.2 24.1 334.9 21.1 343.5 21.1C360.1 21.1 371.3 31.6 371.3 47.5Z" fill="white"/>
+                    <path d="M451.2 55.5C451.2 75.5 436.7 89.9 418.2 89.9C408.6 89.9 401.3 86.5 396.2 81.2C395.7 80.7 394.9 81.1 394.9 81.7V115.5C394.9 115.9 394.6 116.3 394.1 116.3H384.3C383.9 116.3 383.5 116 383.5 115.5V23.2C383.5 22.8 383.8 22.4 384.3 22.4H394.1C394.5 22.4 394.9 22.7 394.9 23.2V29.2C394.9 29.9 395.7 30.2 396.2 29.7C401.3 24.4 408.6 21 418.2 21C436.6 21.1 451.2 35.5 451.2 55.5ZM394.2 55.5C394.2 69.1 403.5 79.3 416.9 79.3C430.6 79.3 439.6 68.7 439.6 55.5C439.6 42.4 430.4 31.8 416.9 31.8C403.5 31.8 394.2 42 394.2 55.5Z" fill="white"/>
+                    <path d="M579.6 36.4C579.4 36.8 578.9 36.9 578.5 36.7C574.1 34 566.1 31 557.9 31C548.9 31 543 34.8 543 40.8C543 46.1 547.8 48.5 555.8 49.5L563.4 50.5C577.4 52.4 585.7 58.3 585.7 69.2C585.7 81.8 574.4 89.9 556.4 89.9C548.4 89.9 537.8 88 529.2 81.9C528.9 81.7 528.8 81.2 529 80.8L533.5 73.7C533.7 73.3 534.2 73.2 534.6 73.5C539.5 77.1 546 80 556.5 80C567.3 80 574 76.5 574 69.9C574 65 569.7 62 560.7 60.9L553.1 60C538.3 58.2 531.1 51.5 531.1 41.5C531.1 28.8 541.6 21.2 557.7 21.2C567.8 21.2 577.1 23.8 583.5 28C583.8 28.2 583.9 28.7 583.7 29L579.6 36.4Z" fill="white"/>
+                    <path d="M637.6 36.4C637.4 36.8 636.9 36.9 636.5 36.7C632.1 34 624.1 31 615.9 31C606.9 31 601 34.8 601 40.8C601 46.1 605.8 48.5 613.8 49.5L621.4 50.5C635.4 52.4 643.7 58.3 643.7 69.2C643.7 81.8 632.4 89.9 614.4 89.9C606.4 89.9 595.8 88 587.2 81.9C586.9 81.7 586.8 81.2 587 80.8L591.5 73.7C591.7 73.3 592.2 73.2 592.6 73.5C597.5 77.1 604 80 614.5 80C625.3 80 632 76.5 632 69.9C632 65 627.7 62 618.7 60.9L611.1 60C596.3 58.2 589.1 51.5 589.1 41.5C589.1 28.8 599.6 21.2 615.7 21.2C625.8 21.2 635.1 23.8 641.5 28C641.8 28.2 641.9 28.7 641.7 29L637.6 36.4Z" fill="white"/>
+                    <path d="M170.8 72.5C170.5 72.2 170 72.2 169.7 72.5C159.9 81.7 146.1 81.5 137 72.3C127.6 62.9 127.6 48.8 137.3 39C146.9 29.4 160.6 29.3 170 38.2C170.3 38.5 170.8 38.5 171.1 38.2L177.6 31.7C177.9 31.4 177.9 30.9 177.6 30.6C163.5 17 142.8 17.1 129.2 30.8C115.3 44.7 115.4 65.7 129.5 79.8C143.5 93.8 164.1 94 178 80.8C178.3 80.5 178.3 80 178 79.7L170.8 72.5Z" fill="white"/>
+                    <path d="M195 55.5C195.4 55.5 195.8 55.2 195.8 54.7C196.2 41.3 206.1 31.7 219.1 31.7C232.4 31.7 242.4 41.6 242.4 55.5C242.4 69.1 232.8 78.8 219.9 79.2C219.5 79.2 219.1 79.5 219.1 80V89.2C219.1 89.6 219.5 90 219.9 90C239.5 89.6 254 74.9 254 55.6C254 36 239.1 21.2 219.1 21.2C199.4 21.2 184.6 35.6 184.1 54.8C184.1 55.2 184.5 55.6 184.9 55.6H195V55.5Z" fill="white"/>
+                    <path d="M521.6 22.5H511.8C511.4 22.5 511 22.8 511 23.3V29.2C505 23.8 497 20.6 487.9 20.6C468.3 20.6 453.5 35.5 453.5 55.5C453.5 75.2 467.9 90 487.1 90.5C487.5 90.5 487.9 90.1 487.9 89.7V79.6C487.9 79.2 487.6 78.8 487.1 78.8C473.7 78.4 464.1 68.5 464.1 55.5C464.1 42.2 474 32.2 487.9 32.2C499.7 32.2 511 40.4 511 49.9V59.6V89.7C511 90.1 511.3 90.5 511.8 90.5H521.6C522 90.5 522.4 90.2 522.4 89.7V51.5V23.2C522.3 22.8 522 22.5 521.6 22.5Z" fill="white"/>
+                    <path d="M656.6 55.5C657 55.5 657.4 55.2 657.4 54.7C657.8 41.3 667.7 31.7 680.7 31.7C694 31.7 704 41.6 704 55.5C704 69.1 694.4 78.8 681.5 79.2C681.1 79.2 680.7 79.5 680.7 80V89.2C680.7 89.6 681.1 90 681.5 90C701.1 89.6 715.6 74.9 715.6 55.6C715.6 36 700.7 21.2 680.7 21.2C661 21.2 646.2 35.6 645.7 54.8C645.7 55.2 646.1 55.6 646.5 55.6H656.6V55.5Z" fill="white"/>
+                    <path d="M686.9 62.6L690.2 50.3C690.9 47.7 688.5 45.2 685.8 45.9L673.5 49.2C670.9 49.9 670 53.2 671.9 55.2L680.9 64.2C682.9 66.1 686.2 65.2 686.9 62.6Z" fill="#FDCA00"/>
+                    <path d="M51.3 102.7C79.577 102.7 102.5 79.777 102.5 51.5C102.5 23.223 79.577 0.300003 51.3 0.300003C23.023 0.300003 0.0999756 23.223 0.0999756 51.5C0.0999756 79.777 23.023 102.7 51.3 102.7Z" fill="#ED751A"/>
+                    <path d="M51.4 3.2C27.8 3.2 8.59998 22.4 8.59998 46C8.59998 48.3 8.79998 50.6 9.09998 52.8C14.6 38.4 29.7 28 47.5 28C62.3 28 75.3 35.2 82.4 46H82.5C87.1 46 91 47.5 93.8 50C93.9 48.7 94 47.4 94 46.1C94.2 22.4 75 3.2 51.4 3.2Z" fill="#FDCA00"/>
+                    <path d="M94 49.9C91.1 47.4 87.3 45.9 82.7 45.9H82.6C70 46 56.8 56.9 53 70.4C51 77.6 52.1 84 55.4 88.5C54.1 88.6 52.8 88.7 51.5 88.7C30.2 88.7 12.5 73.1 9.3 52.7C7.8 56.5 7 60.6 7 64.9C7 75.4 11.8 84.8 19.5 91.5C24.2 95.3 29.7 98.3 35.6 100.2C40.6 101.8 45.9 102.7 51.5 102.7C66.8 102.7 80.6 95.9 90 85.2C93.2 81.5 95.9 77.4 98 72.9C98.3 72.1 98.6 71.3 98.8 70.4C101 61.8 99 54.3 94 49.9Z" fill="#E42322"/>
+                    <path d="M713.7 155.3C707.5 155.3 704.7 152.1 704.7 146V108.1H685.8V136.3C681.5 127.1 672.2 120.7 661.3 120.7C650.5 120.7 641.1 127.1 636.8 136.3V121.3H618.2V147.8C618.2 152.6 615.7 155.8 611.5 155.8C607.3 155.8 604.8 152.6 604.8 147.8V121.3H585.9V148C585.9 164.4 596 174.7 611.5 174.7C624 174.7 632.9 167.8 635.8 156.5C639.5 167.1 649.5 174.7 661.3 174.7C673 174.7 682.9 167.3 686.7 157C689.5 169 698.6 174.3 710.8 174.3H715.6V155.4H713.7V155.3ZM661.3 155.7C656.8 155.7 653.2 152.1 653.2 147.6C653.2 143.1 656.8 139.5 661.3 139.5C665.8 139.5 669.4 143.1 669.4 147.6C669.4 152.1 665.8 155.7 661.3 155.7Z" fill="white"/>
+                </svg>
+
+        </div>
+    </div>
+</body>
+</html>
