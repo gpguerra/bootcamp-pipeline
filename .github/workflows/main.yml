@@ -38,8 +38,8 @@ jobs:
           contentType="text/html"
           dateValue=`date -R`
           stringToSign="PUT\n\n${contentType}\n${dateValue}\n${resource}"
-          s3Key=AKIARK3MOFE37NWVLIGK
-          s3Secret=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
+          s3Key=<PUT KEY HERE>
+          s3Secret=<PUT SECRET HERE>
           signature=`echo -en ${stringToSign} | openssl sha1 -hmac ${s3Secret} -binary | base64`
           curl -X PUT -T "${file}" \
             -H "Host: ${bucket}.s3.amazonaws.com" \
